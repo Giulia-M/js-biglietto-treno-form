@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,10 +8,61 @@
     <title>js-biglietto-treno-form</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+    <h1>Calcola il prezzo del tuo biglietto</h1>
+
+    <form action="" id="formCustomizeTicket">
+        <div>
+            <!-- <label for="name_surname">Nome Cognome</label> -->
+            <h4>Nome Cognome</h4>
+
+            <input type="text" id="name_surname" placeholder="Nome Cognome" name="name_surname">
+        </div>
+        <div>
+            <!-- <label for="km">Km da percorrere</label> -->
+            <h4>Km da percorrere</h4>
+
+            <input type="text" name="kmDaPercorrere">
+        </div>
+        <div>
+            <!-- <label for="">Fascia d'età</label> -->
+            <h4>Fascia d'età</h4>
+
+            <select name="età" id="">
+                <option value="minorenne">Minorenne</option>
+                <option value="over_65">Over 65</option>
+            </select>
+        </div>
+        <div>
+            <button>Genera</button>
+            <button>Annulla</button>
+            <a href="#" id="myLink">link</a>
+        </div>
 
 
+    </form>
+
+    <h1>Il tuo Biglietto</h1>
+    <h2>Dettaglio Passeggeri</h2>
+
+    <h3>Nome Passeggero</h3>
+    <h3 id="nomeCognomeUtente"></h3>
+
+    <h3>Offerta</h3>
+    <h3 id=""></h3>
+
+    <h3>Carrozza</h3>
+    <h3></h3>
+
+    <h3>Codice CP</h3>
+    <h3></h3>
     
+    <h3>Costo Biglietto</h3>
+    <h3></h3>
+
+
     <script src="myScript.js"></script>
 </body>
+
 </html>
