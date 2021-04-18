@@ -15,7 +15,7 @@ formCustomizeTicket.addEventListener("submit", function (event) {
     var codiceCarrozzaElement = document.getElementById("carrozza");
     var offertaElement = document.getElementById("offerta")
 
-    
+
     // .currentTarger fa riferimento all'elemento che ha scatenato il mio submit, cioè fa riferimento al FORM  e nn al singolo input, perchè l'evento submit l'ho aggiunto sul form 
     var form = event.currentTarget;
 
@@ -30,25 +30,30 @@ formCustomizeTicket.addEventListener("submit", function (event) {
     var nomeCognome = nomeCognomeElement.value;
     var tragittoKm = tragittoElement.value;
     */
-    
-    // con .value recupero quello che l'utente ha scritto nell'input
-    var nomeCognome = formElements.name_surname.value;
-    var tragittoKm = formElements.kmDaPercorrere.value;
-    var fasciaEta = formElements.eta.value;
 
-    //risultato del primo input
-    nomeCognomeUtenteElement.innerHTML = nomeCognome;
-    prezzoBigliettoElement.innerHTML = prezzoTicket(fasciaEta, tragittoKm);
-    codiceCPElement.innerHTML = getRandomInt(90000, 99999);
-    codiceCarrozzaElement.innerHTML = getRandomInt(1, 12);
-    offertaElement.innerHTML = sconto(fasciaEta);
+    // con .value recupero quello che l'utente ha scritto nell'input
+    var nomeCognome = formElements.name_surname.value.trim();
+    var tragittoKm = parseFloat(formElements.kmDaPercorrere.value.trim());
+    var fasciaEta = formElements.eta.value;
+    if (Number.isNaN(tragittoKm)) {
+        alert("Il numero inserito non è valido");
+    } else if (!nomeCognome) {
+        alert("Non hai inserito Nome e Cognome.")
+    } else {
+        //risultato del primo input
+        nomeCognomeUtenteElement.innerHTML = nomeCognome;
+        prezzoBigliettoElement.innerHTML = prezzoTicket(fasciaEta, tragittoKm);
+        codiceCPElement.innerHTML = getRandomInt(90000, 99999);
+        codiceCarrozzaElement.innerHTML = getRandomInt(1, 12);
+        offertaElement.innerHTML = sconto(fasciaEta);
+    }
 
 
 
 })
 
 formCustomizeTicket.addEventListener("reset", function () {
-    
+
 
     //dove voglio che mi compaia il contenuto dell'input?
     var nomeCognomeUtenteElement = document.getElementById("nomeCognomeUtente");
@@ -76,34 +81,29 @@ formCustomizeTicket.addEventListener("reset", function () {
 function prezzoTicket(anniUtente, numeroKmPercorsi) {
     var prezzoKm = 0.21;
     var esito;
+    
+    // elaborazione input 
 
-    if (Number.isNaN(numeroKmPercorsi)) {
-        alert("Il numero inserito non è valido");
-        
+    var prezzoTotale = numeroKmPercorsi * prezzoKm;
+
+
+    if (anniUtente === "over_65") {
+        var scontoOver = (prezzoTotale / 100) * 40;
+
+        esito = prezzoTotale - scontoOver;
+
+
+    } else if (anniUtente === "minorenne") {
+        var scontoJunior = (prezzoTotale / 100) * 20;
+
+        esito = prezzoTotale - scontoJunior;
 
     } else {
-        // elaborazione input 
-        
-        var prezzoTotale = numeroKmPercorsi * prezzoKm;
-        
-        
-        if (anniUtente === "over_65") {
-            var scontoOver = (prezzoTotale / 100) * 40;
-            
-            esito = prezzoTotale - scontoOver;
-            
 
-        } else if (anniUtente === "minorenne") {
-            var scontoJunior = (prezzoTotale / 100) * 20;
-           
-            esito = prezzoTotale - scontoJunior;
-            
-        } else {
-            
-            esito = prezzoTotale
-        }
-       
+        esito = prezzoTotale
     }
+
+
 
     return esito.toFixed(2) + "€"
 }
@@ -114,12 +114,12 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function sconto(eta){
-    
-    switch(eta) {
+function sconto(eta) {
+
+    switch (eta) {
         case "over_65": return "Sconto Over 65";
         case "minorenne": return "Sconto Minorenne";
         default: return "Nessuno sconto";
-    } 
+    }
 
 }
